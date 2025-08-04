@@ -356,30 +356,54 @@ export default function DiscoveryCallPage() {
     }
   }, [])
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setIsSubmitting(true)
+
+  //   try {
+  //     // Simulate form submission
+  //     await new Promise(resolve => setTimeout(resolve, 500))
+
+  //     // Create Calendly URL with prefilled data
+  //     const calendlyUrl = `${CALENDLY_URL}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`
+      
+  //     console.log('Opening Calendly with URL:', calendlyUrl)
+      
+  //     // Direct approach - just open in new tab (works everywhere)
+  //     window.open(calendlyUrl, '_blank', 'width=800,height=700,scrollbars=yes,resizable=yes')
+      
+  //   } catch (error) {
+  //     console.error('Error:', error)
+  //     // Ultimate fallback
+  //     window.open(CALENDLY_URL, '_blank')
+  //   } finally {
+  //     setIsSubmitting(false)
+  //   }
+  // }
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  e.preventDefault()
+  setIsSubmitting(true)
 
-    try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 500))
+  try {
+    const res = await fetch("/api/discovery-call", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
 
-      // Create Calendly URL with prefilled data
-      const calendlyUrl = `${CALENDLY_URL}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`
-      
-      console.log('Opening Calendly with URL:', calendlyUrl)
-      
-      // Direct approach - just open in new tab (works everywhere)
-      window.open(calendlyUrl, '_blank', 'width=800,height=700,scrollbars=yes,resizable=yes')
-      
-    } catch (error) {
-      console.error('Error:', error)
-      // Ultimate fallback
-      window.open(CALENDLY_URL, '_blank')
-    } finally {
-      setIsSubmitting(false)
-    }
+    if (!res.ok) throw new Error("Failed to submit")
+
+    const calendlyUrl = `${CALENDLY_URL}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`
+    window.open(calendlyUrl, "_blank", "width=800,height=700,scrollbars=yes,resizable=yes")
+
+  } catch (error) {
+    console.error("Error:", error)
+    alert("There was a problem sending your message. Please try again.")
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -576,7 +600,7 @@ export default function DiscoveryCallPage() {
                   Book Your Free Discovery Call
                 </Button>
               </div>
-
+              
               {/* Social Media */}
               <Card className="bg-slate-800 text-white border-0">
                 <CardHeader>

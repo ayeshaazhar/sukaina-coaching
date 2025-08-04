@@ -16,6 +16,12 @@ export function Header() {
           Sukaina Pasha
         </span>
         <span className="text-sm text-[#2C3E50] tracking-wide italic opacity-80">Transformational Coaching</span>
+        {/* <img
+  src="/A_logo_for_Sukaina_Pasha,_a_Transformation_Coach,_.png"
+  alt="Sukaina Pasha Logo"
+  className="h-20 w-auto"
+/> */}
+
       </div>
 
       {/* Desktop Navigation */}

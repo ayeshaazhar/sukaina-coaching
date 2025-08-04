@@ -188,19 +188,57 @@ export function WheelOfLifeAssessment() {
     })
   }
 
+  // const handleSubmit = async () => {
+  //   setIsSubmitting(true)
+
+  //   // Generate the wheel chart
+  //   generateWheelChart()
+
+  //   // Simulate API call to send email
+  //   await new Promise((resolve) => setTimeout(resolve, 2000))
+
+  //   setIsSubmitting(false)
+  //   setIsComplete(true)
+  //   setCurrentStep(totalSteps - 1)
+  // }
+
   const handleSubmit = async () => {
-    setIsSubmitting(true)
+  setIsSubmitting(true)
 
-    // Generate the wheel chart
-    generateWheelChart()
+  // 1. Generate the wheel chart
+  generateWheelChart()
 
-    // Simulate API call to send email
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+  // 2. Send email with results
+  try {
+    const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: assessmentData.name,
+        email: assessmentData.email,
+        scores: assessmentData.scores,
+        insights: assessmentData.insights,
+      }),
+    })
 
+    const data = await res.json()
+    if (!data.success) {
+      throw new Error("Email failed to send.")
+    }
+  } catch (error) {
+    alert("Something went wrong while sending your results. Please try again.")
     setIsSubmitting(false)
-    setIsComplete(true)
-    setCurrentStep(totalSteps - 1)
+    return
   }
+
+  // 3. Mark complete
+  setIsSubmitting(false)
+  setIsComplete(true)
+  setCurrentStep(totalSteps - 1)
+}
+
 
   const resetAssessment = () => {
     setCurrentStep(0)
@@ -509,3 +547,6 @@ export function WheelOfLifeAssessment() {
     </div>
   )
 }
+
+
+

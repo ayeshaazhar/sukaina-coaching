@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-white">
       {/* Background shapes */}
-      <div className="absolute top-0 left-0 w-[70vw] h-[120vh] bg-[#E0F2F7] rounded-br-[50%] -translate-x-1/4 -translate-y-1/4 z-0" />
+      <div className="absolute top-0 left-0 w-[70vw] h-[120vh] bg-[#eaf3fb] rounded-br-[50%] -translate-x-1/4 -translate-y-1/4 z-0" />
       <div className="absolute top-0 right-0 w-[60vw] h-[100vh] bg-white rounded-bl-[50%] translate-x-1/4 -translate-y-1/4 z-0" />
       <div className="absolute bottom-0 right-0 w-[50vw] h-[80vh] bg-[#1A5276] rounded-tl-[50%] translate-x-1/4 translate-y-1/4 z-0" />
 
